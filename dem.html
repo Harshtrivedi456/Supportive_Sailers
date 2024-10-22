@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Interactive Flexbox Layout with Key Features</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom right, #d0e7f9, #ffffff);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: rgba(135, 206, 235, 0.9);
+            color: white;
+            padding: 1.5em;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        header h1 {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .container {
+            padding: 40px;
+            gap: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px; /* Adjust if necessary */
+            min-height: 100vh;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            width: 100%;
+            max-width: 1200px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome-section {
+            text-align: center;
+            padding: 50px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+        }
+
+        .welcome-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #004080;
+        }
+
+        .welcome-section p {
+            font-size: 1.2em;
+            color: #666;
+        }
+
+        .animation-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 150px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .moving-truck {
+            width: 100px;
+            height: 50px;
+            background-color: #004080;
+            position: relative;
+            border-radius: 10px;
+            animation: moveTruck 5s linear infinite;
+        }
+
+        @keyframes moveTruck {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .moving-truck::before,
+        .moving-truck::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            width: 20px;
+            height: 20px;
+            background-color: #333;
+            border-radius: 50%;
+        }
+
+        .moving-truck::before {
+            left: 15px;
+        }
+
+        .moving-truck::after {
+            right: 15px;
+        }
+
+        .box {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            background-color: rgba(240, 248, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+        }
+
+        .box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .box img {
+            width: 40%;
+            border-radius: 8px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .box:hover img {
+            transform: scale(1.05);
+        }
+
+        .text {
+            flex: 1;
+            padding-left: 20px;
+        }
+
+        .text h2 {
+            margin-bottom: 10px;
+            color: #004080;
+        }
+
+        .features {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            margin: 10px 0;
+        }
+
+        .continue-button {
+            display: block;
+            width: 160px;
+            padding: 12px;
+            margin: 30px auto;
+            background-color: #4682b4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1.1em;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .continue-button:hover {
+            background-color: #3571a3;
+        }
+
+        .quotes {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .quotes blockquote {
+            margin: 10px 0;
+            padding: 0 10px;
+            border-left: 3px solid #4682b4;
+            text-align: left;
+        }
+
+        footer {
+            background-color: #87ceeb;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <header id="header">
+        <h1>SUPPORTIVE SAILERS</h1>
+        <p>Leading the Way in Logistics & Delivery Solutions</p>
+    </header>
+
+    <div class="container">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <h2>Welcome to Supportive Sailers!</h2>
+            <p>Your trusted partner for all logistics and delivery solutions. We are dedicated to ensuring on-time delivery, customer satisfaction, and operational efficiency.</p>
+        </div>
+
+        <!-- Animation of Moving Truck -->
+        <div class="animation-container">
+            <div class="moving-truck"></div>
+        </div>
+
+        <div class="main-content">
+            <!-- Timely Delivery Section -->
+            <div class="box" id="section1">
+                <img src="C:\Users\HARSH\Pictures\scene-with-photorealistic-logistics-operations-proceedings_23-2151468884.png" alt="Timely Delivery">
+                <div class="text">
+                    <h2>Importance of Timely Delivery</h2>
+                    <p>On-time delivery is crucial in logistics as it directly impacts customer satisfaction and operational efficiency. Businesses that ensure timely delivery not only build trust but also streamline operations, ultimately reducing costs.</p>
+                </div>
+            </div>
+
+            <!-- Logistics Efficiency Section -->
+            <div class="box" id="section2">
+                <img src="C:\Users\HARSH\Pictures\transport-logistics-concept_23-2151541940.png" alt="Logistics Efficiency">
+                <div class="text">
+                    <h2>Logistics Efficiency</h2>
+                    <p>By optimizing delivery routes and leveraging real-time traffic data, companies can significantly improve logistics efficiency. This leads to reduced fuel costs, faster deliveries, and an overall enhancement in productivity.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Features Section -->
+        <div class="features">
+            <h2>Key Features of Our Logistics Platform</h2>
+            <ul class="feature-list">
+                <li>Real-time delivery tracking</li>
+                <li>Route optimization for fuel savings</li>
+                <li>Automatic notifications and updates</li>
+            </ul>
+            <a href="demindex.html" class="continue-button">Next</a>
+        </div>
+
+        <!-- Quotes Section -->
+        <div class="quotes">
+            <blockquote>
+                "Logistics is the ball and chain of armored warfare." - Heinz Guderian
+            </blockquote>
+            <blockquote>
+                "Logistics is the hard part of fighting a war." - General Omar Bradley
+            </blockquote>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Supportive Sailers | Delivering Excellence Every Time</p>
+    </footer>
+</body>
+
+</html>

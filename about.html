@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Your Logistics Project</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom right, #d0e7f9, #ffffff);
+            color: #333;
+        }
+
+        header {
+            background-color: rgba(135, 206, 235, 0.9);
+            color: white;
+            text-align: center;
+            padding: 2em 0;
+            position: relative;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: slideDown 0.5s forwards 0.1s;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section {
+            margin: 20px 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: slideDown 0.5s forwards;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .meet-our-team {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .team-member {
+            flex: 1 0 22%; /* Adjusted for four members */
+            margin: 10px;
+            text-align: center;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: slideDown 0.5s forwards;
+        }
+
+        .team-member img {
+            width: 100%;
+            height: auto;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background-color: #87ceeb;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: slideDown 1.5s forwards 2.1s;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>About Us</h1>
+        <p>Learn more about our mission and values.</p>
+    </header>
+
+    <main>
+        <section>
+            <h2>Our Mission</h2>
+            <p>In today's logistics, it is the most important part of any country. Efficient logistics can significantly enhance the economy, allowing businesses to operate smoothly and effectively.</p>
+        </section>
+
+        <section>
+            <h2>Challenges in Logistics</h2>
+            <p>Despite the critical role of logistics, traffic congestion and inefficient routing pose significant challenges, resulting in delays and increased operational costs. For example, a delivery truck stuck in traffic can lead to missed deadlines and dissatisfied customers.</p>
+            <p>These challenges inspired us to develop innovative solutions that optimize delivery routes and reduce congestion, enhancing the overall logistics experience.</p>
+        </section>
+
+        <section>
+            <h2>Meet Our Team</h2>
+            <div class="meet-our-team">
+                <div class="team-member">
+                    <img src="path/to/team-member1.jpg" alt="Team Member 1">
+                    <h3>Harsh Trivedi</h3>
+                    <p>Logistics Manager</p>
+                </div>
+                <div class="team-member">
+                    <img src="path/to/team-member2.jpg" alt="Team Member 2">
+                    <h3>Viraj Vaghasiya</h3>
+                    <p>Operations Specialist</p>
+                </div>
+                <div class="team-member">
+                    <img src="path/to/team-member3.jpg" alt="Team Member 3">
+                    <h3>Bhavin Muchhala</h3>
+                    <p>Data Analyst</p>
+                </div>
+                <div class="team-member">
+                    <img src="path/to/team-member4.jpg" alt="Team Member 4">
+                    <h3>Krushang Savaliya</h3>
+                    <p>Supply Chain Expert</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="contact-info">
+            <p>Need Assistance? Call us at: [Phone Number]</p>
+            <p>Email: [Email Address]</p>
+        </div>
+        <div class="social-media">
+            <p>Follow Us:</p>
+            <a href="#">Facebook</a>
+            <a href="#">Twitter</a>
+            <a href="#">LinkedIn</a>
+            <a href="#">Instagram</a>
+        </div>
+        <div class="policies">
+            <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Optional: Ensure header and footer are animated on load
+        window.onload = function() {
+            const header = document.querySelector('header');
+            const footer = document.querySelector('footer');
+            header.style.opacity = 1;
+            footer.style.opacity = 1;
+
+            // Animate team member sections
+            const teamMembers = document.querySelectorAll('.team-member');
+            teamMembers.forEach((member, index) => {
+                member.style.animationDelay = `${index * 0.1 + 0.5}s`;
+                member.style.opacity = 1; // Make them visible after loading
+            });
+        }
+    </script>
+</body>
+</html>

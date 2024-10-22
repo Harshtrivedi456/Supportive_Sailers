@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Logistics Project</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom right, #d0e7f9, #ffffff);
+            color: #333;
+        }
+
+        header {
+            background-color: rgba(135, 206, 235, 0.9);
+            color: white;
+            text-align: center;
+            padding: 2em 0;
+            position: relative;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: slideDown 0.5s forwards 0.1s;
+        }
+
+        .hero-section {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4682b4;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #3571a3;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section {
+            margin: 20px 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: slideDown 0.5s forwards;
+        }
+
+        /* Individual delay for sections */
+        .services {
+            animation-delay: 0.3s;
+        }
+        .features {
+            animation-delay: 0.6s;
+        }
+        .testimonials {
+            animation-delay: 0.9s;
+        }
+        .cta {
+            animation-delay: 1.2s;
+        }
+        .tracking {
+            animation-delay: 1.5s;
+        }
+        .resources {
+            animation-delay: 1.8s;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        footer {
+            background-color: #87ceeb;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: slideDown 1.5s forwards 2.1s; /* Footer animation */
+        }
+
+        .contact-info,
+        .social-media,
+        .policies {
+            margin: 10px 0;
+        }
+
+        /* Styles for tracking result */
+        .tracking-result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e6f7ff;
+            border: 1px solid #b3e0ff;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="hero-section">
+            <h1>Optimize Your Deliveries with Our Smart Logistics Solutions</h1>
+            <p>Finding the fastest routes to save time and reduce costs.</p>
+            <a href="create_account.html" class="cta-button">Get Started Today</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="services">
+            <h2>Overview of Services</h2>
+            <div class="service">
+                <h3>Efficient Route Planning</h3>
+                <p>Use our intelligent algorithms to find the best routes, minimizing traffic and ensuring timely deliveries.</p>
+            </div>
+            <div class="service">
+                <h3>Real-Time Traffic Monitoring</h3>
+                <p>Stay updated with live traffic data that helps you avoid congested areas.</p>
+            </div>
+            <div class="service">
+                <h3>Custom Delivery Solutions</h3>
+                <p>Tailored logistics solutions to meet your unique delivery needs.</p>
+            </div>
+        </section>
+
+        <section class="features">
+            <h2>Key Features/Benefits</h2>
+            <ul>
+                <li><strong>Smart Traffic Analysis:</strong> Analyzes real-time conditions to ensure you take the quickest route.</li>
+                <li><strong>Cost Savings:</strong> Optimize fuel usage and delivery times.</li>
+                <li><strong>User-Friendly Interface:</strong> Easily input starting and destination points for immediate route suggestions.</li>
+            </ul>
+        </section>
+
+        <section class="testimonials">
+            <h2>Customer Testimonials</h2>
+            <blockquote>
+                <p>"Thanks to SUPPORTIVE SAILERS, we've significantly reduced our delivery times!" - John D., Logistics Manager</p>
+            </blockquote>
+            <blockquote>
+                <p>"The route optimization feature has saved us both time and money." - Emily R., Small Business Owner</p>
+            </blockquote>
+        </section>
+
+        <section id="quote" class="cta">
+            <h2>Start Your Journey</h2>
+            <p>Ready to enhance your logistics efficiency? Click the button below to get started!</p>
+            <a href="#quote" class="cta-button">Get a Quote</a>
+        </section>
+
+        <!-- <section class="tracking">
+            <h2>Track Your Shipments</h2>
+            <a href="track_shipment.html"></a>
+            <input type="text" id="tracking-number" placeholder="Enter Tracking Number">
+            <button id="track-button">Track</button>
+            <div class="tracking-result" id="tracking-result" style="display:none;"></div>
+        </section> -->
+        <section class="tracking">
+            <h2>Track Your Shipments</h2>
+            <input type="text" id="tracking-number" placeholder="Enter Tracking Number">
+            <button id="track-button">Track</button>
+            <div class="tracking-result" id="tracking-result" style="display:none;"></div>
+        </section>
+        
+        <script>
+            document.getElementById('track-button').addEventListener('click', function() {
+                // Check if the user is logged in (you can modify this condition based on your actual login logic)
+                const isLoggedIn = false; // Replace this with actual login status check
+        
+                if (!isLoggedIn) {
+                    // Prompt user to log in
+                    alert("Please log in to track your shipments.");
+                    // Optionally redirect to login page
+                    window.location.href = 'track_shipment.html'; // Redirect to login page
+                } else {
+                    // Proceed with tracking logic
+                    const trackingNumber = document.getElementById('tracking-number').value;
+                    // You can add your tracking logic here
+                    document.getElementById('tracking-result').style.display = 'block';
+                    document.getElementById('tracking-result').innerText = `Tracking information for: ${trackingNumber}`;
+                }
+            });
+        </script>
+        
+
+        <section class="resources">
+            <h2>Stay Informed</h2>
+            <p>Check out our blog for tips on improving logistics efficiency and staying updated on industry trends.</p>
+            <a href="blog.html" class="cta-button">Read Our Blog</a>
+        </section>
+        <section id="Join Us" class="cta">
+            <h2>Get Started Your Journey</h2>
+            <!-- <a href="create_account.html">Create Account</a> -->
+            <!-- <a href="create_account.html" class="continue-button">Create Account</a> -->
+            <a href="create_account.html" class="cta-button">Create Account</a>
+        </section>
+    </main>
+
+    <footer>
+        <div class="contact-info">
+            <p>Need Assistance? Call us at: +91 6354410461</p>
+            <p>Email: supportivesailers@gmail.com</p>
+        </div>
+        <div class="social-media">
+            <p>Follow Us:</p>
+            <a href="#">Facebook</a>
+            <a href="#">Twitter</a>
+            <a href="#">LinkedIn</a>
+            <a href="#">Instagram</a>
+        </div>
+        <div class="policies">
+            <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </footer>
+    
+    <script>
+        // Optional: Ensure header and footer are animated on load
+        window.onload = function() {
+            const header = document.querySelector('header');
+            const footer = document.querySelector('footer');
+            header.style.opacity = 1;
+            footer.style.opacity = 1;
+        }
+
+        // Add functionality for tracking shipments
+        document.getElementById('track-button').addEventListener('click', function() {
+            const trackingNumber = document.getElementById('tracking-number').value;
+            const resultDiv = document.getElementById('tracking-result');
+
+            // Simulating tracking logic (in a real app, you would fetch this data from your server)
+            if (trackingNumber) {
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `Tracking number: ${trackingNumber} - Your package is in transit. Expected delivery: 2 days.`;
+            } else {
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = 'Please enter a valid tracking number.';
+            }
+        });
+    </script>
+</body>
+</html>
