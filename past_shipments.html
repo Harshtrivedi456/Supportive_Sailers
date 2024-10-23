@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Past Shipments - CareerCrafters</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom right, #d0e7f9, #ffffff);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        header {
+            position: relative;
+            background-color: rgba(135, 206, 235, 0.9);
+            color: white;
+            padding: 1.5em;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden; /* Ensure moving elements stay within the header */
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        nav {
+            margin-top: 1em;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            background-color: #004080;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #3571a3;
+        }
+
+        .moving-object {
+            position: absolute;
+            top: 20px; /* Adjust as needed */
+            width: 60px; /* Adjust size */
+            height: 60px; /* Adjust size */
+            animation-duration: 10s; /* Speed of the animation */
+            animation-timing-function: linear;
+        }
+
+        .plane {
+            background: url('plane.png') no-repeat center;
+            background-size: contain;
+            animation-name: fly-plane;
+        }
+
+        .truck {
+            background: url('truck.png') no-repeat center;
+            background-size: contain;
+            animation-name: drive-truck;
+        }
+
+        @keyframes fly-plane {
+            0% { left: -10%; transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+            100% { left: 100%; transform: translateY(0); }
+        }
+
+        @keyframes drive-truck {
+            0% { right: -10%; }
+            100% { right: 100%; }
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        section {
+            width: 100%;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th,
+        table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        table th {
+            background-color: #004080;
+            color: white;
+        }
+
+        footer {
+            background-color: #87ceeb;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="moving-object plane"></div>
+        <div class="moving-object truck"></div>
+        <h1>Past Shipments</h1>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="track_shipment.html">Track Shipments</a></li>
+                <li><a href="manage_account.html">Manage Account</a></li>
+                <li><a href="#kruskal-section">Optimize Routes</a></li>
+                <li><a href="logout.html">Log Out</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Your Past Shipments</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tracking Number</th>
+                        <th>Recipient</th>
+                        <th>Destination</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>123456</td>
+                        <td>John Doe</td>
+                        <td>New York, NY</td>
+                        <td>Delivered</td>
+                        <td>2024-10-01</td>
+                    </tr>
+                    <tr>
+                        <td>789012</td>
+                        <td>Jane Smith</td>
+                        <td>Los Angeles, CA</td>
+                        <td>In Transit</td>
+                        <td>2024-10-05</td>
+                    </tr>
+                    <tr>
+                        <td>345678</td>
+                        <td>Mike Johnson</td>
+                        <td>Chicago, IL</td>
+                        <td>Delivered</td>
+                        <td>2024-10-10</td>
+                    </tr>
+                    <tr>
+                        <td>901234</td>
+                        <td>Emily Davis</td>
+                        <td>Houston, TX</td>
+                        <td>Cancelled</td>
+                        <td>2024-10-12</td>
+                    </tr>
+                    <tr>
+                        <td>567890</td>
+                        <td>Sarah Wilson</td>
+                        <td>Miami, FL</td>
+                        <td>Delivered</td>
+                        <td>2024-10-15</td>
+                    </tr>
+                    <!-- Add more dummy data as needed -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>Need Assistance? Call us at: [Phone Number]</p>
+        <p>Email: supportivesailers@gmail.com</p>
+        <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
+
+</body>
+
+</html>

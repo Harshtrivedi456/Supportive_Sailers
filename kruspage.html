@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kruskal's Algorithm - CareerCrafters</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom right, #d0e7f9, #ffffff);
+            color: #333;
+        }
+        header {
+            background-color: rgba(135, 206, 235, 0.9);
+            color: white;
+            padding: 1.5em;
+            text-align: center;
+        }
+        nav ul {
+            list-style: none; /* Remove default bullet points */
+            padding: 0; /* Remove default padding */
+            display: flex; /* Align items horizontally */
+            gap: 20px; /* Space between buttons */
+        }
+        nav a.button {
+            display: inline-block; /* Allow padding and margins to be applied */
+            color: white; /* Text color */
+            text-decoration: none; /* Remove underline */
+            padding: 10px 15px; /* Padding for button-like appearance */
+            background-color: #004080; /* Background color */
+            border-radius: 5px; /* Rounded corners */
+            transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+        }
+        nav a.button:hover {
+            background-color: #3571a3; /* Change color on hover */
+        }
+        main {
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 800px;
+        }
+        section {
+            padding: 20px;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        h2 {
+            color: #004080;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Kruskal's Algorithm</h1>
+        <nav>
+            <ul>
+                <li><a href="dashboard.html" class="button">Dashboard</a></li>
+                <!-- <li><a href="other_page.html" class="button">Other Page</a></li> -->
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Introduction</h2>
+            <p>Kruskal's algorithm is a classic algorithm used for finding the Minimum Spanning Tree (MST) of a connected, weighted graph.</p>
+        </section>
+        <section>
+            <section id="how-it-works">
+                <h2>How Does It Work?</h2>
+                <ol>
+                    <li><strong>List All Edges:</strong> Start by listing all the connections (edges) between points (nodes) along with their costs (weights).</li>
+                    <li><strong>Sort the Edges:</strong> Arrange all edges from the lowest to the highest cost to prioritize the cheapest connections while avoiding cycles.</li>
+                    <li><strong>Pick Edges:</strong> Start picking edges from the top of the sorted list and add them to your network, but only if they don’t create a loop. This means you check if the points connected by the edge are already connected.</li>
+                    <li><strong>Repeat:</strong> Keep adding edges until you connect all the points together.</li>
+                </ol>
+                <p>This process ensures that you create a network that connects all points with the least total cost.</p>
+            </section>
+        <section id="static-graph">
+            <h2>Static Graph Example</h2>
+            <img src="C:\Users\HARSH\Pictures\static_graph.png" alt="Static Graph Example" />
+            <p>This image shows how Kruskal's algorithm connects points in a graph. The highlighted edges form the Minimum Spanning Tree (MST), which is the cheapest way to connect all points.</p>
+        </section>
+        <!-- <section>
+            <h2>Pseudocode</h2>
+            <pre>
+                function kruskal(graph):
+                    sort all edges in graph by weight
+                    create a forest (set of trees)
+                    create a set to keep track of trees
+                    for each edge in sorted edges:
+                        if it connects two different trees:
+                            add it to the forest
+                            union the two trees
+            </pre>
+        </section> -->
+        <section id="complexity-analysis">
+            <h2>Understanding Complexity</h2>
+            <p>Kruskal's algorithm is efficient, which means it can handle large graphs well. The main steps involve:</p>
+            <ul>
+                <li><strong>Sorting the edges:</strong> This step takes time based on how many edges you have.</li>
+                <li><strong>Checking connections:</strong> This ensures we don’t create loops and takes very little time.</li>
+            </ul>
+            <p>In simple terms, the time it takes to run Kruskal’s algorithm grows with the number of edges, but it does so in a manageable way.</p>
+        </section>
+        <section>
+            <h2>Use Cases of Kruskal's Algorithm</h2>
+            <ul>
+                <li>
+                    <h3>Network Design</h3>
+                    <p>Designing cost-effective telecommunication networks connecting multiple cities.</p>
+                </li>
+                <li>
+                    <h3>Transportation Networks</h3>
+                    <p>Planning new roads to connect cities while minimizing overall construction costs.</p>
+                </li>
+                <li>
+                    <h3>Electrical Grids</h3>
+                    <p>Connecting substations with the least amount of wiring to reduce costs.</p>
+                </li>
+                <li>
+                    <h3>Computer Networking</h3>
+                    <p>Setting up local area networks to minimize cabling length and cost.</p>
+                </li>
+                <li>
+                    <h3>Urban Planning</h3>
+                    <p>Determining optimal infrastructure layout in cities to connect all areas efficiently.</p>
+                </li>
+                <li>
+                    <h3>Cluster Analysis</h3>
+                    <p>Clustering similar data points to reveal underlying data structures.</p>
+                </li>
+                <li>
+                    <h3>Graphical Modeling</h3>
+                    <p>Generating efficient 3D meshes in computer graphics applications.</p>
+                </li>
+                <li>
+                    <h3>Game Development</h3>
+                    <p>Creating navigable terrains by minimizing distances between game points.</p>
+                </li>
+                <li>
+                    <h3>Supply Chain Management</h3>
+                    <p>Optimizing supply chains to connect warehouses and distribution centers efficiently.</p>
+                </li>
+                <li>
+                    <h3>Social Network Analysis</h3>
+                    <p>Analyzing user connections to identify tightly knit clusters in social networks.</p>
+                </li>
+            </ul>
+        </section>
+        
+        <section>
+            <h2>Example</h2>
+            <p>Consider the following undirected graph with weighted edges:</p>
+            <pre>
+           4
+        A ---- B
+        | \    | \
+        |  \   |  \
+        2|   5 |   |7
+        |     \ |    \
+        C ---- D ---- F
+        | 3   6
+        |   /
+        |  /
+        2| /
+        E
+            </pre>
+            <h3>Applying Kruskal's Algorithm</h3>
+            <ol>
+                <li>List the edges with weights and sort them.</li>
+                <li>Add edges to the MST while checking for cycles.</li>
+                <li>Stop when the MST has V-1 edges.</li>
+            </ol>
+            <p>Resulting Minimum Spanning Tree:</p>
+            <pre>
+           4
+        A ---- B
+        | 
+        |  
+        2|  
+        |     \
+        C ---- D
+        | 3  
+        |
+        E
+            </pre>
+        </section>
+        <section>
+            <h2>Conclusion</h2>
+            <p>Kruskal's algorithm is essential for solving MST problems in various applications.</p>
+            <p>Which can very much helpfull if we apply it to the logistics and transportation industry.</p>
+
+        </section>
+    </main>
+    <footer>
+        <p>Need Assistance? Call us at: [Phone Number]</p>
+        <p>Email: supportivesailers@gmail.com</p>
+        <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
+</body>
+</html>
