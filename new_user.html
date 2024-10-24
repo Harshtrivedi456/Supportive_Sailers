@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - CareerCrafters</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom right, #d0e7f9, #ffffff);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: rgba(135, 206, 235, 0.9);
+            color: white;
+            padding: 1.5em;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        header h2 {
+            margin: 0.5em 0;
+            font-size: 1.5em;
+        }
+
+        nav {
+            margin-top: 1em;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            background-color: #004080;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #3571a3;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        section {
+            width: 100%;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        section:hover {
+            transform: translateY(-5px);
+        }
+
+        .tracking,
+        .kruskal {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .tracking input {
+            padding: 10px;
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .tracking button,
+        .kruskal button {
+            padding: 10px 20px;
+            background-color: #004080;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .tracking button:hover,
+        .kruskal button:hover {
+            background-color: #3571a3;
+        }
+
+        .notifications,
+        .recent-activities {
+            padding: 10px;
+        }
+
+        footer {
+            background-color: #87ceeb;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Welcome <span id="username">User</span></h1>
+        <h2>Hello, <span id="username">User</span>!</h2>
+        <nav>
+            <ul>
+                <li><a href="#track_shipment.html">Track Shipments</a></li>
+                <li><a href="#manage_account.html">Manage Account</a></li>
+                <li><a href="#past_shipments.html">View Past Shipments</a></li>
+                <li><a href="#project4.html">Optimize Routes</a></li>
+                <li><a href="#logout.html">Log Out</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="action tracking">
+            <h2>Track Your Shipments</h2>
+            <input type="text" id="tracking-number" placeholder="Enter Tracking Number">
+            <button id="track-button">Track</button>
+            <div class="tracking-result" id="tracking-result" style="display:none;"></div>
+        </section>
+
+        <section class="notifications">
+            <h2>Notifications</h2>
+            <ul id="notification-list">
+                <!-- <li>Your shipment tub189 has been dispatched.</li>
+                <li>Delivery for shipment kys331 has been successfully completed.</li>
+                <li>Your shipment lqb012 is out for delivery.</li>
+                <li>New promotional offer: Get 20% off on your next shipment!</li>
+                <li>Reminder: Update your account details for better service.</li> -->
+                <li>No recent notifications</li>
+            </ul>
+        </section>
+
+        <section class="recent-activities">
+            <h2>Recent Activities</h2>
+            <ul id="activity-list">
+                <!-- <li>Shipment hbk156 was dispatched on October 20, 2024.</li>
+                <li>Shipment jqr321 was delivered on October 21, 2024.</li>
+                <li>Shipment gsv782 was picked up on October 22, 2024.</li>
+                <li>Shipment rxu789 was scheduled for delivery on October 23, 2024.</li>
+                <li>Shipment wky654 was returned to the sender.</li> -->
+                <li>Let's start your journey</li>
+            </ul>
+        </section>
+
+        <section id="kruskal-section" class="action kruskal">
+            <h2>Optimize Delivery Routes</h2>
+            <p>Utilize Kruskal's algorithm to find the optimal delivery route for your shipments. Click the button below to start.</p>
+            <button id="kruskal-button">Run Kruskal's Algorithm</button>
+            <div class="kruskal-result" id="kruskal-result" style="display:none;"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Need Assistance? Call us at: [Phone Number]</p>
+        <p>Email: supportivesailers@gmail.com</p>
+        <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
+
+    <script>
+        // Mock data for Kruskal's algorithm
+        const edges = [
+            { start: 'A', end: 'B', weight: 4 },
+            { start: 'A', end: 'C', weight: 2 },
+            { start: 'B', end: 'C', weight: 1 },
+            { start: 'B', end: 'D', weight: 5 },
+            { start: 'C', end: 'D', weight: 3 },
+        ];
+
+        // Function to find the parent of a node in the disjoint set
+        function find(parent, node) {
+            if (parent[node] !== node) {
+                parent[node] = find(parent, parent[node]);
+            }
+            return parent[node];
+        }
+
+        // Function to union two sets
+        function union(parent, rank, x, y) {
+            let xRoot = find(parent, x);
+            let yRoot = find(parent, y);
+            if (xRoot !== yRoot) {
+                if (rank[xRoot] < rank[yRoot]) {
+                    parent[xRoot] = yRoot;
+                } else if (rank[xRoot] > rank[yRoot]) {
+                    parent[yRoot] = xRoot;
+                } else {
+                    parent[yRoot] = xRoot;
+                    rank[xRoot]++;
+                }
+            }
+        }
+
+        // Function to run Kruskal's algorithm
+        function runKruskal() {
+            // Sort edges based on weight
+            edges.sort((a, b) => a.weight - b.weight);
+
+            const parent = {};
+            const rank = {};
+            edges.forEach(edge => {
+                parent[edge.start] = edge.start;
+                parent[edge.end] = edge.end;
+                rank[edge.start] = 0;
+                rank[edge.end] = 0;
+            });
+
+            const mst = []; // Minimum Spanning Tree
+
+            edges.forEach(edge => {
+                const { start, end, weight } = edge;
+                if (find(parent, start) !== find(parent, end)) {
+                    union(parent, rank, start, end);
+                    mst.push(edge);
+                }
+            });
+
+            // Display results
+            const resultDiv = document.getElementById('kruskal-result');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = `<h3>Minimum Spanning Tree (MST) Edges:</h3><ul>` +
+                mst.map(edge => `<li>${edge.start} - ${edge.end} (Weight: ${edge.weight})</li>`).join('') +
+                `</ul>`;
+        }
+
+        // Button click event
+        document.getElementById('kruskal-button').addEventListener('click', runKruskal);
+    </script>
+</body>
+
+</html>
