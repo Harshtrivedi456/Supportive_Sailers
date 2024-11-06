@@ -4,13 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Optimized Route with Live Traffic</title>
-
-    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    
-    <!-- Leaflet Routing Machine CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
-
     <style>
         body, html {
             margin: 0;
@@ -18,12 +13,10 @@
             height: 100%;
             width: 100%;
         }
-
         #map {
             height: 100%;
             width: 100%;
         }
-
         #route-buttons {
             position: absolute;
             top: 10px;
@@ -33,7 +26,6 @@
             gap: 10px;
             flex-direction: column;
         }
-
         .route-btn {
             padding: 10px;
             background-color: #007bff;
@@ -42,11 +34,9 @@
             cursor: pointer;
             border-radius: 5px;
         }
-
         .route-btn:hover {
             background-color: #0056b3;
         }
-
         #loading-message {
             position: absolute;
             top: 50%;
@@ -58,7 +48,6 @@
             border-radius: 10px;
             display: none;
         }
-
         #route-info-popup {
             position: absolute;
             bottom: 20px;
@@ -69,10 +58,8 @@
             font-size: 16px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             display: none;
-            z-index: 1000; /* Ensure it appears above other elements */
+            z-index: 1000;
         }
-
-        /* Input field styling */
         #address-input {
             padding: 8px;
             width: 200px;
@@ -83,108 +70,58 @@
 </head>
 <body>
     <div id="map"></div>
-
     <div id="route-buttons">
         <input type="text" id="address-input" placeholder="Enter address" />
         <button class="route-btn" onclick="addWaypointByAddress()">Add Waypoint</button>
         <button class="route-btn" onclick="removeLastWaypoint()">Remove Last Waypoint</button>
         <button class="route-btn" onclick="clearAllWaypoints()">Clear All Waypoints</button>
         <button class="route-btn" onclick="optimizeAndShowRoute()">Find Optimized Route</button>
-        <!-- <button class="route-btn" onclick="toggleRouteStyle()">Toggle Route Style</button> -->
         <button class="route-btn" onclick="suggestTravelTime()">Suggest Travel Time</button>
-        <!-- <button class="route-btn" onclick="redirectTohome()">Finish</button> Finish Button -->
         <a href="dashboard.html" class="route-btn">Finish</a>
-
-
     </div>
     <div id="waypoint-list" style="position: absolute; top: 150px; left: 50px; background: rgba(255, 255, 255, 0.8); padding: 10px; border-radius: 5px; max-height: 300px; overflow-y: auto;">
         <strong>Waypoints:</strong>
         <ul id="waypoints-ul"></ul>
     </div>
-    
-
-    <!-- Loading message -->
-    <!-- <div id="loading-message">Finding Route...</div> -->
-    <div id="loading-message" style="display: none;">
-        <img src="spinner.gif" alt="Loading..." />
-        Finding Route...
-    </div>
-    
-
-    <!-- Route Information Popup -->
+    <div id="loading-message">Finding Route...</div>
     <div id="route-info-popup"></div>
-
-    <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
-    <!-- Leaflet Routing Machine JS -->
     <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
-
-    <!-- TomTom Routing API and Traffic API Integration -->
     <script>
-        const TOMTOM_API_KEY = 'WPglpwBsq3RAlGQqJ8t4TkpRihGrspCI'; // Replace with your actual TomTom API key
-
-        // Initialize the map centered over Gujarat, India
+        const TOMTOM_API_KEY = 'WPglpwBsq3RAlGQqJ8t4TkpRihGrspCI';
         var map = L.map('map').setView([22.2587, 71.1924], 8);
-
-        // Add the OpenStreetMap tiles
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-        }).addTo(map);
-
-        var waypoints = [];
-        var waypointMarkers = [];
-        var routeSegments = [];
-        var totalDistance = 0;
-        var totalTravelTime = 0;
-        var totalTimeInTraffic = 0;
-
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 19 }).addTo(map);
+        var waypoints = [], waypointMarkers = [], routeSegments = [];
+        var totalDistance = 0, totalTravelTime = 0, totalTimeInTraffic = 0;
         var loadingMessage = document.getElementById('loading-message');
         var routeInfoPopup = document.getElementById('route-info-popup');
 
-        // Show the "Finding Route..." message
         function showLoadingMessage() {
             loadingMessage.style.display = 'block';
         }
-
-        // Hide the "Finding Route..." message
         function hideLoadingMessage() {
             loadingMessage.style.display = 'none';
         }
-
-        // Show the route info popup with total distance and travel time
         function showRouteInfoPopup() {
-    const estimatedArrivalTime = new Date(Date.now() + totalTravelTime * 1000);
-    routeInfoPopup.style.display = 'block';
-    routeInfoPopup.innerHTML = `
-        <strong>Total Distance:</strong> ${(totalDistance / 1000).toFixed(2)} km<br>
-        <strong>Estimated Travel Time:</strong> ${(totalTravelTime / 60).toFixed(2)} minutes<br>
-        <strong>Time with Traffic:</strong> ${(totalTimeInTraffic / 60).toFixed(2)} minutes<br>
-        <strong>Estimated Arrival Time:</strong> ${estimatedArrivalTime.toLocaleTimeString()}
-    `;
-}
-
-
-
-        // Add Waypoint by Address
+            const estimatedArrivalTime = new Date(Date.now() + totalTravelTime * 1000);
+            routeInfoPopup.style.display = 'block';
+            routeInfoPopup.innerHTML = `
+                <strong>Total Distance:</strong> ${(totalDistance / 1000).toFixed(2)} km<br>
+                <strong>Estimated Travel Time:</strong> ${(totalTravelTime / 60).toFixed(2)} minutes<br>
+                <strong>Time with Traffic:</strong> ${(totalTimeInTraffic / 60).toFixed(2)} minutes<br>
+                <strong>Estimated Arrival Time:</strong> ${estimatedArrivalTime.toLocaleTimeString()}
+            `;
+        }
         async function addWaypointByAddress() {
             const address = document.getElementById('address-input').value;
-            if (!address) {
-                alert("Please enter an address.");
-                return;
-            }
-
+            if (!address) { alert("Please enter an address."); return; }
             const coordinates = await geocodeAddress(address);
             if (coordinates) {
                 waypoints.push(coordinates);
                 waypointMarkers.push(L.marker(coordinates).addTo(map));
                 map.setView(coordinates, 12);
-            } else {
-                alert("Address not found.");
-            }
+            } else { alert("Address not found."); }
         }
-
-        // Geocode address to latitude and longitude
         async function geocodeAddress(address) {
             const url = `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(address)}.json?key=${TOMTOM_API_KEY}`;
             const response = await fetch(url);
@@ -195,180 +132,114 @@
             }
             return null;
         }
-
-        // Optimize Route and Show Traffic-Based Colored Route
         async function optimizeAndShowRoute() {
-            if (waypoints.length < 2) {
-                alert('Please select at least 2 waypoints.');
-                return;
-            }
-
-            // Clear any existing routes
+            if (waypoints.length < 2) { alert('Please select at least 2 waypoints.'); return; }
             routeSegments.forEach(segment => map.removeLayer(segment));
             routeSegments = [];
-
-            totalDistance = 0;
-            totalTravelTime = 0;
-            totalTimeInTraffic = 0;
-
+            totalDistance = totalTravelTime = totalTimeInTraffic = 0;
             showLoadingMessage();
-
             let remainingWaypoints = [...waypoints];
-            let optimizedRoute = [remainingWaypoints[0]]; // Keep the starting point fixed
+            let optimizedRoute = [remainingWaypoints[0]];
             remainingWaypoints.splice(0, 1);
-
             while (remainingWaypoints.length > 0) {
                 let current = optimizedRoute[optimizedRoute.length - 1];
                 let nearest = findNearestPoint(current, remainingWaypoints);
                 optimizedRoute.push(nearest.point);
                 remainingWaypoints.splice(nearest.index, 1);
             }
-
             for (let i = 0; i < optimizedRoute.length - 1; i++) {
-                let start = optimizedRoute[i];
-                let end = optimizedRoute[i + 1];
-                await drawRoadSegmentWithTraffic(start, end);
+                await drawRoadSegmentWithTraffic(optimizedRoute[i], optimizedRoute[i + 1]);
             }
-
             hideLoadingMessage();
             showRouteInfoPopup();
         }
-
         function findNearestPoint(current, remaining) {
             let nearest = { point: null, index: -1, distance: Infinity };
             for (let i = 0; i < remaining.length; i++) {
                 let distance = current.distanceTo(remaining[i]);
-                if (distance < nearest.distance) {
-                    nearest = { point: remaining[i], index: i, distance: distance };
-                }
+                if (distance < nearest.distance) { nearest = { point: remaining[i], index: i, distance: distance }; }
             }
             return nearest;
         }
-
         async function drawRoadSegmentWithTraffic(start, end) {
             const routeData = await fetchRoadRouteWithTraffic(start, end);
             const trafficColor = getTrafficColor(routeData.totalTimeInTraffic);
-
             let polyline = L.polyline(routeData.routeCoords, {
                 color: trafficColor,
                 weight: 5,
                 opacity: 0.7
             }).addTo(map);
-
             routeSegments.push(polyline);
-
             totalDistance += routeData.totalDistance;
             totalTravelTime += routeData.totalTravelTime;
             totalTimeInTraffic += routeData.totalTimeInTraffic;
         }
-
         async function fetchRoadRouteWithTraffic(start, end) {
             const url = `https://api.tomtom.com/routing/1/calculateRoute/${start.lat},${start.lng}:${end.lat},${end.lng}/json?key=${TOMTOM_API_KEY}&traffic=true&routeType=shortest`;
             const response = await fetch(url);
             const data = await response.json();
             const route = data.routes[0].legs[0];
-
             const routeCoords = route.points.map(pt => [pt.latitude, pt.longitude]);
             const totalDistance = route.summary.lengthInMeters;
             const totalTravelTime = route.summary.travelTimeInSeconds;
             const totalTimeInTraffic = route.summary.trafficDelayInSeconds;
-
             return { routeCoords, totalDistance, totalTravelTime, totalTimeInTraffic };
         }
-
         function getTrafficColor(timeInTraffic) {
             if (timeInTraffic < 120) return 'green';
             if (timeInTraffic < 600) return 'orange';
             return 'red';
         }
-        // let detailedView = false;
-
-
-
-// Suggest the Best Start Time Based on Traffic Analysis
-async function suggestTravelTime() {
-    let recommendedTime = new Date(); // Start with the current time
-
-    const trafficData = await fetchTrafficData();
-
-    if (trafficData) {
-        // Adjust time based on congestion level
-        const congestionLevel = trafficData.congestionLevel;
-
-        // If traffic is high, suggest an earlier or later time
-        if (congestionLevel > 70) {  
-            recommendedTime.setHours(recommendedTime.getHours() - 1); // Suggest an hour earlier
-        } else if (congestionLevel < 30) {
-            recommendedTime.setHours(recommendedTime.getHours() + 1); // Suggest an hour later
-        }
-    }
-
-    alert("Recommended Start Time: " + recommendedTime.toLocaleTimeString());
-}
-// Add this function to enable address autocomplete using TomTom's Search API
-async function enableAutocomplete() {
-    const input = document.getElementById('address-input');
-    input.addEventListener('input', async () => {
-        const address = input.value;
-        if (address.length > 2) {
-            const suggestions = await geocodeAddress(address);
-            // Populate suggestions (you'll need to create a dropdown for this)
-        }
-    });
-}
-
-// Call enableAutocomplete() in your script
-enableAutocomplete();
-
-// Function to remove the last waypoint
-function removeLastWaypoint() {
-    if (waypoints.length === 0) {
-        alert("No waypoints to remove.");
+        async function suggestTravelTime() {
+    if (waypoints.length < 2) {
+        alert("Please set up a route with at least 2 waypoints to get travel time suggestions.");
         return;
     }
 
-    // Remove the last waypoint from the array
-    waypoints.pop();
-    
-    // Remove the corresponding marker from the map
-    const marker = waypointMarkers.pop();
-    if (marker) {
-        map.removeLayer(marker);
+    showLoadingMessage();
+    let hasTrafficIssues = false;
+
+    for (let i = 0; i < waypoints.length - 1; i++) {
+        const start = waypoints[i];
+        const end = waypoints[i + 1];
+
+        const routeData = await fetchRoadRouteWithTraffic(start, end);
+        const trafficLevel = getTrafficLevel(routeData.totalTimeInTraffic);
+
+        if (trafficLevel === "heavy") {
+            hasTrafficIssues = true;
+            break;
+        }
     }
-    
-    alert("Last waypoint removed.");
-}
-function clearAllWaypoints() {
-    waypoints = [];
-    waypointMarkers.forEach(marker => map.removeLayer(marker));
-    waypointMarkers = [];
-    alert("All waypoints cleared.");
-}
 
+    hideLoadingMessage();
 
-
-
-// Function to Fetch Traffic Data (Mock Example)
-// Fetch traffic data with correct API key
-async function fetchTrafficData() {
-    const trafficApiUrl = `https://api.tomtom.com/traffic/services/4/flowSegmentData/absolute/10/json?point=22.2587,71.1924&key=${TOMTOM_API_KEY}`;
-
-    const response = await fetch(trafficApiUrl);
-    if (response.ok) {
-        const data = await response.json();
-        return {
-            congestionLevel: data.flowSegmentData.congestion, // Use congestion level if available
-            currentSpeed: data.flowSegmentData.currentSpeed,
-            freeFlowSpeed: data.flowSegmentData.freeFlowSpeed
-        };
+    if (hasTrafficIssues) {
+        alert("Heavy traffic detected along your route. Consider traveling at a different time if possible.");
     } else {
-        console.error("Error fetching traffic data:", response.statusText);
-        return null;
+        alert("Current travel time is optimal based on real-time traffic conditions.");
     }
 }
 
+// Helper function to classify traffic delay levels
+function getTrafficLevel(timeInTraffic) {
+    if (timeInTraffic < 120) return "light";
+    if (timeInTraffic < 600) return "moderate";
+    return "heavy"; // Traffic level is considered heavy if delay is more than 10 minutes
+}
 
+        function removeLastWaypoint() {
+            if (waypoints.length > 0) {
+                waypoints.pop();
+                let marker = waypointMarkers.pop();
+                map.removeLayer(marker);
+            }
+        }
+        function clearAllWaypoints() {
+            waypoints = [];
+            waypointMarkers.forEach(marker => map.removeLayer(marker));
+            waypointMarkers = [];
+        }
     </script>
 </body>
 </html>
- 
